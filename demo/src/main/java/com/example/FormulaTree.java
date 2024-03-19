@@ -25,4 +25,35 @@ public class FormulaTree {
 		}
 		return root;
 	}
+
+	public int calculate(){
+		return calculate_rec(head);
+	}
+
+	private int calculate_rec(Node tree){
+		int result=0;
+		if(tree.getLeft() == null && tree.getRight()==null){
+			result = tree.getInfo() - '0';
+		}
+		else{
+			int left = calculate_rec(tree.getLeft());
+			int right = calculate_rec(tree.getRight());
+			switch (tree.getInfo()) {
+				case '+':
+					result = left+right;
+					break;
+				case '-':
+					result = left-right;
+					break;
+				case '*':
+					result = left*right;
+					break;
+				case '/':
+					result = left/right;
+				default:
+					break;
+			}
+		}
+		return result;
+	}
 }

@@ -7,5 +7,6 @@ public class Main {
         Scanner in = new Scanner(System.in);
         String str = in.nextLine();
         FormulaTree tree = new FormulaTree(str);
+        System.out.println(tree.calculate());
     }
 }
