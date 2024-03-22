@@ -1,15 +1,20 @@
 package com.example;
-
+/**
+ * @param Node - элемент дерева
+ * @param info - значение элемента
+ * @param right, left - указатели на правый и левый элемент
+ */
 public class Node {
 	private char info;
 	private Node left, right;
-
+	
+	//конструктор
 	public Node(char info, Node left, Node right) {
 		this.info = info;
 		this.left = left;
 		this.right = right;
 	}
-
+	//геттеры и сеттеры
 	public char getInfo() {
 		return info;
 	}
