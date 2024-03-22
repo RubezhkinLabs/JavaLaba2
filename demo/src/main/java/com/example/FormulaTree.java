@@ -2,18 +2,18 @@ package com.example;
 /**
  * FormulaTree - дерево - формула
  * @param head - начало дерева
+ * @param i - переменная для проверки правильности составления примера
  */
 public class FormulaTree {
 	private Node head;
-
+	private static int i = 0;
 	/**
 	 * конструктор
 	 * @param str строка с примером
 	 * @throws Exception при неправильном составлении примера выходит ошибка
 	 */
 	public FormulaTree(String str) throws Exception{
-		int i = 0;
-		this.head = buildTree(str, i);
+		this.head = buildTree(str);
 		if(i != str.length()){
 			throw new Exception("Неправильно составлен пример!");
 		}
@@ -21,10 +21,9 @@ public class FormulaTree {
 	//рекурсивное постоение дерева
 	/**
 	 * @param str строка с примером
-	 * @param i
 	 * @return построенное дерево
 	 */
-	public Node buildTree(String str, int i){
+	public Node buildTree(String str){
 		char c = str.charAt(i);
 		i++;
 		Node root = new Node(' ', null, null);
@@ -32,10 +31,10 @@ public class FormulaTree {
 			root.setInfo(c);
 		}
 		else{
-			root.setLeft(buildTree(str, i));
+			root.setLeft(buildTree(str));
 			root.setInfo(str.charAt(i));
 			i++;
-			root.setRight(buildTree(str, i));
+			root.setRight(buildTree(str));
 			c = str.charAt(i);
 			i++;
 		}
