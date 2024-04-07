@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) throws Exception { 
-        System.out.println("Введите пример. Пример: ((1*2)+((2+3)/1))");
+        System.out.println("Введите пример. Пример: ( ( 1 * 2 ) + ( ( 2 + 3 ) / 1 ) )");
         Scanner in = new Scanner(System.in);
         String str = in.nextLine();
-        FormulaTree tree = new FormulaTree(str);
+         String[] strArr = str.split(" ");
+        FormulaTree tree = new FormulaTree(strArr);
         System.out.println(tree.calculate());
     }
 }

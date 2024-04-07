@@ -12,9 +12,9 @@ public class FormulaTree {
 	 * @param str строка с примером
 	 * @throws Exception при неправильном составлении примера выходит ошибка
 	 */
-	public FormulaTree(String str) throws Exception{
+	public FormulaTree(String[] str) throws Exception{
 		this.head = buildTree(str);
-		if(i != str.length()){
+		if(i != str.length){
 			throw new Exception("Неправильно составлен пример!");
 		}
 	}
@@ -23,19 +23,18 @@ public class FormulaTree {
 	 * @param str строка с примером
 	 * @return построенное дерево
 	 */
-	public Node buildTree(String str){
-		char c = str.charAt(i);
+	public Node buildTree(String[] strArr){
+		String str = strArr[i];
 		i++;
-		Node root = new Node(' ', null, null);
-		if(c>= '0' && c <= '9'){
-			root.setInfo(c);
+		Node root = new Node(" ", null, null);
+		if(str.matches("-?\\d+")){
+			root.setInfo(str);
 		}
 		else{
-			root.setLeft(buildTree(str));
-			root.setInfo(str.charAt(i));
+			root.setLeft(buildTree(strArr));
+			root.setInfo(strArr[i]);
 			i++;
-			root.setRight(buildTree(str));
-			c = str.charAt(i);
+			root.setRight(buildTree(strArr));
 			i++;
 		}
 		return root;
@@ -59,22 +58,22 @@ public class FormulaTree {
 	private int calculate_rec(Node tree) throws Exception{
 		int result=0;
 		if(tree.getLeft() == null && tree.getRight()==null){
-			result = tree.getInfo() - '0';
+			result = Integer.parseInt(tree.getInfo());
 		}
 		else{
 			int left = calculate_rec(tree.getLeft());
 			int right = calculate_rec(tree.getRight());
 			switch (tree.getInfo()) {
-				case '+':
+				case "+":
 					result = left+right;
 					break;
-				case '-':
+				case "-":
 					result = left-right;
 					break;
-				case '*':
+				case "*":
 					result = left*right;
 					break;
-				case '/':
+				case "/":
 					if(right == 0)
 						throw new Exception("Деление на 0");
 					else

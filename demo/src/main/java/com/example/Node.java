@@ -5,21 +5,21 @@ package com.example;
  * @param right, left - указатели на правый и левый элемент
  */
 public class Node {
-	private char info;
+	private String info;
 	private Node left, right;
 	
 	//конструктор
-	public Node(char info, Node left, Node right) {
+	public Node(String info, Node left, Node right) {
 		this.info = info;
 		this.left = left;
 		this.right = right;
 	}
 	//геттеры и сеттеры
-	public char getInfo() {
+	public String getInfo() {
 		return info;
 	}
 
-	public void setInfo(char info) {
+	public void setInfo(String info) {
 		this.info = info;
 	}
 
