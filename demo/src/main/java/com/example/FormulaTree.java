@@ -1,4 +1,10 @@
 package com.example;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 /**
  * FormulaTree - дерево - формула
  * @param head - начало дерева
@@ -7,6 +13,7 @@ package com.example;
 public class FormulaTree {
 	private Node head;
 	private static int i = 0;
+	private Map<String, Integer> params = new HashMap<>();
 	/**
 	 * конструктор
 	 * @param str строка с примером
@@ -30,6 +37,11 @@ public class FormulaTree {
 		if(str.matches("-?\\d+")){
 			root.setInfo(str);
 		}
+		if(Pattern.compile("[a-zA-Z]+").matcher(str).matches()){
+			root.setInfo(str);
+			if(!params.containsKey(str))
+				params.put(str, 0);
+		}
 		else{
 			root.setLeft(buildTree(strArr));
 			root.setInfo(strArr[i]);
@@ -38,6 +50,15 @@ public class FormulaTree {
 			i++;
 		}
 		return root;
+	}
+
+	public void setParams(Scanner in){
+		int num;
+		for(Map.Entry<String, Integer> entry: params.entrySet()){
+			System.out.println("Введите значение для " + entry.getKey());
+			num = in.nextInt();
+			entry.setValue(num);
+		}
 	}
 
 	/**
@@ -58,7 +79,10 @@ public class FormulaTree {
 	private int calculate_rec(Node tree) throws Exception{
 		int result=0;
 		if(tree.getLeft() == null && tree.getRight()==null){
-			result = Integer.parseInt(tree.getInfo());
+			if(tree.getInfo().matches("-?\\d+"))
+				result = Integer.parseInt(tree.getInfo());
+			else
+				result = params.get(tree.getInfo());
 		}
 		else{
 			int left = calculate_rec(tree.getLeft());
