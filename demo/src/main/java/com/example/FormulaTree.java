@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class FormulaTree {
 	private Node head;
 	private static int i = 0;
-	private Map<String, Integer> params = new HashMap<>();
+	private Map<String, Double> params = new HashMap<>();
 	/**
 	 * конструктор
 	 * @param str строка с примером
@@ -45,7 +45,7 @@ public class FormulaTree {
 		else if(Pattern.compile("[a-zA-Z]+").matcher(str).matches()){
 			root.setInfo(str);
 			if(!params.containsKey(str))
-				params.put(str, 0);
+				params.put(str, 0d);
 		}
 		else{
 			root.setLeft(buildTree(strArr));
@@ -58,10 +58,10 @@ public class FormulaTree {
 	}
 
 	public void setParams(Scanner in){
-		int num;
-		for(Map.Entry<String, Integer> entry: params.entrySet()){
+		double num;
+		for(Map.Entry<String, Double> entry: params.entrySet()){
 			System.out.println("Введите значение для " + entry.getKey());
-			num = in.nextInt();
+			num = in.nextDouble();
 			entry.setValue(num);
 		}
 	}
