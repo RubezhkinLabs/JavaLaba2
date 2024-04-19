@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
  * FormulaTree - дерево - формула
  * @param head - начало дерева
  * @param i - переменная для проверки правильности составления примера
+ * @param params - map с переменными и их значениями
  */
 public class FormulaTree {
 	private Node head;
@@ -34,10 +35,10 @@ public class FormulaTree {
 		String str = strArr[i];
 		i++;
 		Node root = new Node(" ", null, null);
-		if(str.matches("-?\\d+")){
+		if(str.matches("-?\\d+(\\.\\d+)?")){
 			root.setInfo(str);
 		}
-		if(Pattern.compile("[a-zA-Z]+").matcher(str).matches()){
+		else if(Pattern.compile("[a-zA-Z]+").matcher(str).matches()){
 			root.setInfo(str);
 			if(!params.containsKey(str))
 				params.put(str, 0);
@@ -66,7 +67,7 @@ public class FormulaTree {
 	 * @return результат
 	 * @throws Exception при делении на ноль вызывается исключение
 	 */
-	public int calculate() throws Exception{
+	public double calculate() throws Exception{
 		return calculate_rec(head);
 	}
 
@@ -76,17 +77,17 @@ public class FormulaTree {
 	 * @return результат подсчета
 	 * @throws Exception при делении на ноль вызывается исключение
 	 */
-	private int calculate_rec(Node tree) throws Exception{
-		int result=0;
+	private double calculate_rec(Node tree) throws Exception{
+		double result=0;
 		if(tree.getLeft() == null && tree.getRight()==null){
-			if(tree.getInfo().matches("-?\\d+"))
-				result = Integer.parseInt(tree.getInfo());
+			if(tree.getInfo().matches("-?\\d+(\\.\\d+)?"))
+				result = Double.parseDouble(tree.getInfo());
 			else
 				result = params.get(tree.getInfo());
 		}
 		else{
-			int left = calculate_rec(tree.getLeft());
-			int right = calculate_rec(tree.getRight());
+			double left = calculate_rec(tree.getLeft());
+			double right = calculate_rec(tree.getRight());
 			switch (tree.getInfo()) {
 				case "+":
 					result = left+right;
@@ -96,6 +97,9 @@ public class FormulaTree {
 					break;
 				case "*":
 					result = left*right;
+					break;
+				case "^":
+					result = Math.pow(left, right);
 					break;
 				case "/":
 					if(right == 0)
